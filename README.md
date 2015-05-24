@@ -1,7 +1,7 @@
-# jquery-SimpleList
-Simple, format-independent JQuery Add/Remove List framework
+# jquery-SimpleList (beta)
+Simple, format-independent JQuery Add/Remove List framework. This framework is still in it's early beta stages, and thus will be frequently updated. 
 ## Usage
-Simply instanciate this framework on any UL element, using it's id attribute, and specify each LI-element's value using the 'value' attribute. i.e.
+Simply instanciate this framework on any UL element, using it's id attribute, and specify each LI-element's value using the 'value'* attribute. i.e.
 ```
     $("#tempList").simpleList();
 ```
@@ -28,3 +28,9 @@ Submitted form data can be accessed by parsing the value as JSON, i.e.
     submittedData = JSON.parse(params[:selectedListData])
 ```
 
+* If you're unable to use the 'value' attribute for whatever reason, you can specify an alternative attribute by invoking SimpleList using:
+```
+    $("#tempList").simpleList({
+        valueAttribute: 'AttributeNameToUse'
+    });
+```
