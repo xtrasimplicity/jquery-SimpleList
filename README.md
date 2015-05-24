@@ -14,6 +14,13 @@ where tempList is defined as follows
   </ul>
 ```
 
+* If you're unable to use the 'value' attribute for whatever reason, you can specify an alternative attribute by invoking SimpleList using:
+```
+    $("#tempList").simpleList({
+        valueAttribute: 'AttributeNameToUse'
+    });
+```
+
 Upon invocation, a hidden input element is automatically added to the DOM, such that the selected list elements are able to be passed on form submission. The hidden input element's 'name' attribute is defined by specifying a name attribute in the initial UL element.
 
 The aforementioned example will therefore automatically instanciate a hidden input element with a name of "selectedListData".
@@ -26,11 +33,4 @@ Submitted form data can be accessed by parsing the value as JSON, i.e.
 #### Ruby
 ```
     submittedData = JSON.parse(params[:selectedListData])
-```
-
-* If you're unable to use the 'value' attribute for whatever reason, you can specify an alternative attribute by invoking SimpleList using:
-```
-    $("#tempList").simpleList({
-        valueAttribute: 'AttributeNameToUse'
-    });
 ```
