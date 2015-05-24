@@ -1,9 +1,11 @@
 (function($) {
     $.fn.simpleList = function( options ) {
 
-        var settings = $.extend({
+        var defaults = $.extend({
            valueAttribute   : 'value'
         });
+        
+        var settings = $.extend( {}, defaults, options);
 
 
         // build destination list
