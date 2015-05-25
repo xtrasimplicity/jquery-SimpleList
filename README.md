@@ -34,3 +34,9 @@ Submitted form data can be accessed by parsing the value as JSON, i.e.
 ```
     submittedData = JSON.parse(params[:selectedListData])
 ```
+Upon clicking on an li-element, the target li-element is marked as 'selected', and an 'sl-selected' class attribute is applied to it. In order to differentiate a selected element and an unselected element, one can apply CSS rules to the 'sl-selected' class, i.e.:
+```
+    sl-selected {
+        background-color: #00FFFF;
+    }
+```
