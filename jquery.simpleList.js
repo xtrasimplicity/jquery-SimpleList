@@ -55,10 +55,10 @@
         // Event Handlers
 
         // select the element
-        $("#"+ idAttribute  +" > li, #"+ destinationID +" > li").on("click", function()
+         $("#"+ idAttribute  +" > li, #"+ destinationID +" > li").on("click", function()
         {
-            $("#"+ idAttribute +" > li, #"+ destinationID +" > li").attr("selected",false); //TODO: Make this a CSS attribute
-            $(this).attr("selected",true);
+            $("#"+ idAttribute +" > li, #"+ destinationID +" > li").removeClass("sl-selected");
+            $(this).addClass("sl-selected");
         });
 
         // Add single
