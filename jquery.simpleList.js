@@ -2,11 +2,10 @@
     $.fn.simpleList = function( options ) {
 
         var defaults = $.extend({
-           valueAttribute   : 'value'
+            valueAttribute   : 'value'
         });
-        
-        var settings = $.extend( {}, defaults, options);
 
+        var settings = $.extend( {}, defaults, options);
 
         // build destination list
         var destinationID = $(this).attr("id") + "_selected";
@@ -32,17 +31,17 @@
 
         // Build the new output (a table with 3 TD elements - 1) Source List, 2) Move/Remove buttons, 3) Destination List)
         var newField = "<table>" +
-                            "<tr>" +
-                                    "<td>" + $(this).get(0).outerHTML + "</td>" +
-                                    "<td>" +
-                                        "<input type='button' value='>' id='"+ $(this).attr("id") +"_add_single' /><br />" +
-                                        "<input type='button' value='>>' id='" + $(this).attr("id") + "_add_all' /><br />" +
-                                        "<input type='button' value='<' id='" + $(this).attr("id") + "_remove_single' /><br />" +
-                                        "<input type='button' value='<<' id='" + $(this).attr("id") + "_remove_all' />" +
-                                    "</td>" +
-                                    "<td>" + destField + "</td>" +
-                            "</tr>" +
-                        "</table>";
+            "<tr>" +
+            "<td>" + $(this).get(0).outerHTML + "</td>" +
+            "<td>" +
+            "<input type='button' value='>' id='"+ $(this).attr("id") +"_add_single' /><br />" +
+            "<input type='button' value='>>' id='" + $(this).attr("id") + "_add_all' /><br />" +
+            "<input type='button' value='<' id='" + $(this).attr("id") + "_remove_single' /><br />" +
+            "<input type='button' value='<<' id='" + $(this).attr("id") + "_remove_all' />" +
+            "</td>" +
+            "<td>" + destField + "</td>" +
+            "</tr>" +
+            "</table>";
 
         // Add the hidden field to this
         newField += hiddenFieldHTML;
@@ -50,21 +49,19 @@
         // Replace the source list's HTML with the new table (newField)
         $(this).replaceWith(newField);
 
-
-
         // Event Handlers
 
         // select the element
-         $("#"+ idAttribute  +" > li, #"+ destinationID +" > li").on("click", function()
+        $("#"+ idAttribute  +" > li, #"+ destinationID +" > li").on("click", function()
         {
             $("#"+ idAttribute +" > li, #"+ destinationID +" > li").removeClass("sl-selected");
-            $(this).addClass("sl-selected");
+            $(this).addClass("sl-selected")
         });
 
         // Add single
         $("#" + idAttribute + "_add_single").on("click", function()
         {
-            addSelectedElementToHiddenElement($("#" + idAttribute + " [selected=selected]"), nameAttribute);
+            addSelectedElementToHiddenElement(idAttribute, nameAttribute);
             addSelectedElementToList(idAttribute, destinationID);
         });
 
@@ -93,87 +90,85 @@
 
 
 
-            function addSelectedElementToList(sourceList,targetList)
+        function addSelectedElementToList(sourceList,targetList)
+        {
+            var selected = $("#"+ sourceList +" .sl-selected");
+
+            if(selected.length > 0)
             {
-                var selected = $("#"+ sourceList +" [selected=selected]");
+                selectedElement = selected.clone(true);
 
-                if(selected.length > 0)
-                {
-                    selectedElement = selected.clone(true);
+                $("#" + targetList).append(selectedElement);
 
-                    $("#" + targetList).append(selectedElement);
-
-                    $(selected).detach();
-                }
-            };
-
-            function addSelectedElementToHiddenElement(selectedElement, hiddenElementSelector)
-            {
-                console.log(selectedElement);
-
-                if(selectedElement.length > 0)
-                {
-                    selectedElement = selectedElement.attr(valueAttributeSelector);
-
-                    var existingValues = JSON.parse($("[name="+hiddenElementSelector+"]").val());
-
-
-
-                    if(existingValues.indexOf(selectedElement) == -1)
-                        existingValues.push(selectedElement);
-
-                    $("[name="+hiddenElementSelector+"]").val(JSON.stringify(existingValues));
-                }
+                $(selected).detach();
             }
+        };
 
-            function addAllElementsToList(sourceList,targetList)
+        function addSelectedElementToHiddenElement(selectedElement, hiddenElementSelector)
+        {
+            var selectedElement = $("#" + selectedElement + " .sl-selected");
+
+            if(selectedElement.length > 0)
             {
-                var elements = $("#" + sourceList + " > li");
+                selectedElement = selectedElement.attr(valueAttributeSelector);
 
-                if(elements.length > 0)
-                {
-                    elements.each(function()
-                    {
-                        $("#" + targetList).append($(this).clone(true));
-
-                        $(this).detach();
-                    });
-                }
-            };
-
-            function addAllElementsToHiddenElement(sourceList,hiddenElementSelector)
-            {
-                var elements = $("#" + sourceList + " > li");
-
-                if(elements.length > 0)
-                {
-                    elements.each(function()
-                    {
-                        addSelectedElementToHiddenElement($(this), hiddenElementSelector);
-
-                    });
-                }
-            };
-
-            function removeSelectedElementFromHiddenElement(selectedElement, hiddenElementSelector)
-            {
                 var existingValues = JSON.parse($("[name="+hiddenElementSelector+"]").val());
 
-                if(existingValues.length > 0)
-                {
-                    var index = existingValues.indexOf(selectedElement.attr(valueAttributeSelector));
+                if(existingValues.indexOf(selectedElement) == -1)
+                    existingValues.push(selectedElement);
 
-                    existingValues.splice(index, 1);
+                $("[name="+hiddenElementSelector+"]").val(JSON.stringify(existingValues));
+            }
+        }
 
-                    $("[name="+hiddenElementSelector+"]").val(JSON.stringify(existingValues));
-                }
-            };
+        function addAllElementsToList(sourceList,targetList)
+        {
+            var elements = $("#" + sourceList + " > li");
 
-
-            function removeAllElementsFromHiddenElement(hiddenElementSelector)
+            if(elements.length > 0)
             {
-                $("[name="+hiddenElementSelector+"]").val("[]");
-            };
+                elements.each(function()
+                {
+                    $("#" + targetList).append($(this).clone(true));
+
+                    $(this).detach();
+                });
+            }
+        };
+
+        function addAllElementsToHiddenElement(sourceList,hiddenElementSelector)
+        {
+            var elements = $("#" + sourceList + " > li");
+
+            if(elements.length > 0)
+            {
+                elements.each(function()
+                {
+                    addSelectedElementToHiddenElement($(this), hiddenElementSelector);
+
+                });
+            }
+        };
+
+        function removeSelectedElementFromHiddenElement(selectedElement, hiddenElementSelector)
+        {
+            var existingValues = JSON.parse($("[name="+hiddenElementSelector+"]").val());
+
+            if(existingValues.length > 0)
+            {
+                var index = existingValues.indexOf(selectedElement.attr(valueAttributeSelector));
+
+                existingValues.splice(index, 1);
+
+                $("[name="+hiddenElementSelector+"]").val(JSON.stringify(existingValues));
+            }
+        };
+
+
+        function removeAllElementsFromHiddenElement(hiddenElementSelector)
+        {
+            $("[name="+hiddenElementSelector+"]").val("[]");
+        };
 
     };
 
