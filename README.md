@@ -1,7 +1,7 @@
 # jquery-SimpleList (beta)
-Simple, format-independent JQuery Add/Remove List framework. This framework is still in it's early beta stages, and thus will be frequently updated. 
+Simple, format-independent JQuery Add/Remove List plugin. This plugin is still in it's early beta stages, and thus will be frequently updated. 
 ## Usage
-Simply instanciate this framework on any UL element, using it's id attribute, and specify each LI-element's value using the 'value'* attribute. i.e.
+Simply instanciate this plugin on any UL element, using it's id attribute, and specify each LI-element's value using the 'value'* attribute. i.e.
 ```
     $("#tempList").simpleList();
 ```
