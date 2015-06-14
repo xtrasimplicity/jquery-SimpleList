@@ -28,7 +28,7 @@ The aforementioned example will therefore automatically instanciate a hidden inp
 Submitted form data can be accessed by parsing the value as JSON, i.e. 
 #### PHP
 ```
-    $submittedData = json_decode(htmlentities($_REQUEST['selectedListData'],ENT_QUOTES));
+    $submittedData = json_decode($_REQUEST['selectedListData']);
 ```
 #### Ruby
 ```
